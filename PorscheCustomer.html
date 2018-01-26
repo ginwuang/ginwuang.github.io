@@ -1,44 +1,41 @@
 <!DOCTYPE html>
+ 
 <html>
-  <head>
-    <title>PorcsheCustomer</title>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
+<head runat="server">
+    <title>內嵌Google地圖</title>
+    <script src='http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.2.js'></script>   
+	<script src="http://maps.google.com/maps?file=api&v=2&key=AIzaSyD4m9MESGXK9LlX5xZZAAAVrZlKQ4ZxqGM"
+type="text/javascript"></script>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+        body,input { font-size: 9pt; }
+        html { height: 100% }  
+        body { height: 100%; margin: 0px; padding: 0px }  
+        #map_canvas { height: 100% }        
     </style>
-  </head>
-  <body>
-    <div id="mymap" style="width: 500px; height: 500px"></div>
     <script>
-      //var map;
-      var map = new GMap(document.getElementById("mymap"));
-      map.addControl(new GSmallMapControl());
-      map.addControl(new GMapTypeControl());
-      map.setCenter(new GLatLng(22.996733, 120.212465), 16);
-      var point = new GLatLng(22.996733, 120.212465);
-      var marker = new GMarker(point);
-      map.addOverlay(marker);
-      var html = "台北保時捷";
-        map.openInfoWindowHtml (map.getCenter(), html);
-     /* function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
+        $(function () {
+            //定義經緯度位置: 以政大校園的八角亭為例
+            var latlng = new google.maps.LatLng(24.985505, 121.57531);
+            //設定地圖參數
+            var mapOptions = {
+                zoom: 16, //初始放大倍數
+                center: latlng, //中心點所在位置
+                mapTypeId: google.maps.MapTypeId.ROADMAP //正常2D道路模式
+            };
+            //在指定DOM元素中嵌入地圖
+            var map = new google.maps.Map(
+                document.getElementById("map_canvas"), mapOptions);
+            //加入標示點(Marker)
+            var marker = new google.maps.Marker({
+                position: latlng, //經緯度
+                title: "八角亭", //顯示文字
+                map: map //指定要放置的地圖對象
+            });
         });
-      }*/
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4m9MESGXK9LlX5xZZAAAVrZlKQ4ZxqGM&callback=initMap"
-    async defer></script>
-  </body>
+</head>
+<body>
+<div id="map_canvas" style="width:100%; height:100%"></div>
+</body>
 </html>
